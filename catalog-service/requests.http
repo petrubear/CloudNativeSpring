@@ -18,3 +18,7 @@ Content-Type: application/json
 ### GET
 GET http://localhost:9001/books/1234567891
 Accept: application/json
+
+
+### Config Server
+http://localhost:8888/catalog-service/default

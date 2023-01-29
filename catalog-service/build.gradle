@@ -14,6 +14,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "2021.0.5")
+    set('testContainersVersion', "1.17.3")
 }
 
 dependencies {
@@ -26,6 +27,7 @@ dependencies {
     implementation 'org.springframework.retry:spring-retry'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:postgresql'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
@@ -33,6 +35,7 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.testcontainers:testcontainers-bom:${testContainersVersion}"
     }
 }
 

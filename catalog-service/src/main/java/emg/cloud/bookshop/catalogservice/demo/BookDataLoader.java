@@ -21,10 +21,10 @@ public class BookDataLoader {
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookTestData() {
         bookRepository.deleteAll();
-        var books = List.of(Book.of("978-1-78528-415-1", "The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 9.90),
-            Book.of("978-1-4028-9462-6", "Dune", "Frank Herbert", 12.78),
-            Book.of("978-0-553-57340-3", "Foundation", "Isaac Asimov", 23.23),
-            Book.of("978-0-553-21311-0", "Fahrenheit 451", "Ray Bradbury", 13.40));
+        var books = List.of(Book.of("978-1-78528-415-1", "The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 9.90, null),
+            Book.of("978-1-4028-9462-6", "Dune", "Frank Herbert", 12.78, null),
+            Book.of("978-0-553-57340-3", "Foundation", "Isaac Asimov", 23.23, null),
+            Book.of("978-0-553-21311-0", "Fahrenheit 451", "Ray Bradbury", 13.40, null));
         bookRepository.saveAll(books);
     }
 }

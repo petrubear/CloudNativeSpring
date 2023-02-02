@@ -1,0 +1,15 @@
+# Build
+custom_build(
+   # Name of the target
+   ref = 'config-service',
+   # Command to build image
+   command = './gradlew bootBuildImage --imageName $EXPECTED_REF',
+   # List of files to watch for changes
+   deps = ['build.gradle', 'src']
+)
+
+# Deploy
+k8s_yaml(['k8s/deployment.yaml', 'k8s/service.yaml'])
+
+# Manage
+k8s_resource('config-service', port_forwards=['8888'])

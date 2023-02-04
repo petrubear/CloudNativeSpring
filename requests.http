@@ -22,3 +22,13 @@ Accept: application/json
 
 ### Config Server
 http://localhost:8888/catalog-service/default
+
+### Order Service
+### POST Order
+POST http://localhost:9002/orders
+Content-Type: application/json
+
+{
+  "isbn": "1234567892",
+  "quantity": 3
+}

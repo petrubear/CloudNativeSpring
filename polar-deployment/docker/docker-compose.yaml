@@ -1,16 +1,9 @@
 version: "3.8"
+networks:
+  polar:
+    driver: bridge
 services:
-  catalog-service:
-    depends_on:
-      - polar-postgres
-    image: "catalog-service"
-    container_name: "catalog_service"
-    ports:
-      - 9001:9001
-    environment:
-      - BPL_JVM_THREAD_COUNT=50
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://polar-postgres:5432/polardb_catalog
-      - SPRING_PROFILES_ACTIVE=testData
+  # Servers
   polar-postgres:
     image: "postgres:14.4"
     container_name: "polar-postgres"
@@ -19,6 +12,76 @@ services:
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-
     volumes:
       - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d polardb_catalog -U user" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - polar
+  ## Applications
+  config-service:
+    depends_on:
+      polar-postgres:
+        condition: service_healthy
+    image: "config-service"
+    container_name: "config-service"
+    ports:
+      - 8888:8888
+    environment:
+      - BPL_JVM_THREAD_COUNT=50
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/8888' || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - polar
+  catalog-service:
+    depends_on:
+      polar-postgres:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    image: "catalog-service"
+    container_name: "catalog_service"
+    ports:
+      - 9001:9001
+    environment:
+      - BPL_JVM_THREAD_COUNT=50
+      - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://polar-postgres:5432/polardb_catalog
+      - SPRING_PROFILES_ACTIVE=testData
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/9001' || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - polar
+  order-service:
+    depends_on:
+      polar-postgres:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+      catalog-service:
+        condition: service_healthy
+    image: "order-service"
+    container_name: "order_service"
+    ports:
+      - 9002:9002
+    environment:
+      - BPL_JVM_THREAD_COUNT=50
+      - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
+      - SPRING_FLYWAY_URL=jdbc:postgresql://polar-postgres:5432/polardb_order
+      - SPRING_R2DBC_URL=r2dbc:postgresql://polar-postgres:5432/polardb_order
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/9002' || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - polar

@@ -35,6 +35,6 @@ spring:
         initial-interval: 1000
       enabled: true
   config:
-    import: optional:configserver:http://config-server:8888
+    import: "optional:configserver:"
 polar:
   catalog-service-uri: http://localhost:9001

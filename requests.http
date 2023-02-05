@@ -9,7 +9,7 @@ POST http://localhost:9001/books
 Content-Type: application/json
 
 {
-  "isbn": "1234567891",
+  "isbn": "978-1-78528-415-3",
   "title": "Northern Lights",
   "author": "Lyra Silverstar",
   "price": 9.90
@@ -29,6 +29,6 @@ POST http://localhost:9002/orders
 Content-Type: application/json
 
 {
-  "isbn": "1234567892",
+  "isbn": "978-1-78528-415-1",
   "quantity": 3
 }

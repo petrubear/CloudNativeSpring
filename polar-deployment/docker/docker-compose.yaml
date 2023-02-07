@@ -21,6 +21,11 @@ services:
       retries: 10
     networks:
       - polar
+  polar-redis:
+    image: "redis:7.0"
+    container_name: "polar-redis"
+    ports:
+      - 6379:6379
   ## Applications
   config-service:
     depends_on:

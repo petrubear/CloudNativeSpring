@@ -26,6 +26,8 @@ services:
     container_name: "polar-redis"
     ports:
       - 6379:6379
+    networks:
+      - polar
   polar-rabbitmq:
     image: "rabbitmq:3.10-management"
     container_name: "polar-rabbitmq"

@@ -9,10 +9,11 @@ POST http://localhost:9001/books
 Content-Type: application/json
 
 {
-  "isbn": "978-1-78528-415-3",
+  "isbn": {{isbn}},
   "title": "Northern Lights",
   "author": "Lyra Silverstar",
-  "price": 9.90
+  "price": 9.90,
+  "publisher": "Penguin Books"
 }
 
 ### GET
@@ -29,6 +30,9 @@ POST http://localhost:9002/orders
 Content-Type: application/json
 
 {
-  "isbn": "978-1-78528-415-1",
+  "isbn": {{isbn}},
   "quantity": 3
 }
+
+### GET Orders
+GET http://localhost:9002/orders

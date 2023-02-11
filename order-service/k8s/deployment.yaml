@@ -23,7 +23,7 @@ spec:
               exec:
                 command: ["/bin/sh", "-c", "sleep 5"]
           ports:
-            - containerPort: 9001
+            - containerPort: 9002
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"

@@ -13,6 +13,19 @@ spring:
           group: ${spring.application.name}
         packlabel-out-0:
           destination: order-dispatched
+    config:
+      uri: http://localhost:8888
+      request-connect-timeout: 5000
+      request-read-timeout: 5000
+      fail-fast: false
+      retry:
+        max-attempts: 6
+        multiplier: 1.1
+        max-interval: 2000
+        initial-interval: 1000
+      enabled: true
+  config:
+    import: "optional:configserver:"
   rabbitmq:
     host: localhost
     port: 5672

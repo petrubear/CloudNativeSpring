@@ -1,9 +1,6 @@
 package emg.cloud.bookshop.catalogservice.domain;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
+import org.springframework.data.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -29,6 +26,10 @@ public record Book(
     Instant createdDate,
     @LastModifiedDate
     Instant lastModifiedDate,
+    @CreatedBy
+    String createdBy,
+    @LastModifiedBy
+    String lastModifiedBy,
     @Version
     int version
 ) {
@@ -39,6 +40,6 @@ public record Book(
         Double price,
         String publisher
     ) {
-        return new Book(null, isbn, title, author, price, publisher, null, null, 0);
+        return new Book(null, isbn, title, author, price, publisher, null, null, null, null, 0);
     }
 }

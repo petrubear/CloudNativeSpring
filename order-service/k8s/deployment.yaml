@@ -21,7 +21,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/sh", "-c", "sleep 5"]
+                command: [ "/bin/sh", "-c", "sleep 5" ]
           ports:
             - containerPort: 9002
           env:
@@ -33,3 +33,5 @@ spec:
               value: jdbc:postgresql://polar-postgres/polardb_catalog
             - name: SPRING_R2DBC_URL
               value: r2dbc:postgresql://polar-postgres:5432/polardb_order
+            - name: SPRING_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
+              value: http://polar-keycloak/realms/PolarBookshop

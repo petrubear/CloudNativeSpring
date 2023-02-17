@@ -1,8 +1,6 @@
 package emg.cloud.bookshop.orderservice.domain;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.*;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
@@ -11,7 +9,6 @@ import java.time.Instant;
 public record Order(
     @Id
     Long id,
-
     String bookIsbn,
     String bookName,
     Double bookPrice,
@@ -21,11 +18,15 @@ public record Order(
     Instant createdDate,
     @LastModifiedDate
     Instant lastModifiedDate,
-    @org.springframework.data.annotation.Version
+    @CreatedBy
+    String createdBy,
+    @LastModifiedBy
+    String lastModifiedBy,
+    @Version
     int version
 ) {
     public static Order of(String bookIsbn, String bookName, Double bookPrice, Integer quantity, OrderStatus status) {
-        return new Order(null, bookIsbn, bookName, bookPrice, quantity, status, null, null, 0);
+        return new Order(null, bookIsbn, bookName, bookPrice, quantity, status, null, null, null, null, 0);
     }
 
 }

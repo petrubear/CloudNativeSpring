@@ -114,7 +114,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health, metrics, prometheus
   endpoint:
     health:
       show-details: always
@@ -124,3 +124,6 @@ management:
       group:
         readiness:
           include: readinessState, redis
+  metrics:
+    tags:
+      application: ${spring.application.name}

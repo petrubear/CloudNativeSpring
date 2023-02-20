@@ -16,6 +16,7 @@ repositories {
 ext {
     set('springCloudVersion', "2021.0.5")
     set('testcontainersVersion', "1.17.6")
+    set('otelVersion', "1.17.0")
 }
 
 dependencies {
@@ -29,6 +30,7 @@ dependencies {
     runtimeOnly 'org.postgresql:r2dbc-postgresql'
     runtimeOnly 'org.springframework:spring-jdbc'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    runtimeOnly "io.opentelemetry.javaagent:opentelemetry-javaagent:${otelVersion}"
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
     testImplementation("org.springframework.cloud:spring-cloud-stream") {

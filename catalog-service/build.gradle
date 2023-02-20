@@ -16,6 +16,7 @@ ext {
     set('springCloudVersion', "2021.0.5")
     set('testContainersVersion', "1.17.3")
     set('testKeycloakVersion', "2.3.0")
+    set('otelVersion', "1.17.0")
 }
 
 dependencies {
@@ -29,6 +30,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    runtimeOnly "io.opentelemetry.javaagent:opentelemetry-javaagent:${otelVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -63,7 +65,11 @@ bootRun {
 bootBuildImage {
     imageName = "${project.name}"
     environment = ["BP_JVM_VERSION": "17.*"]
-    pullPolicy = "IF_NOT_PRESENT"
+    builder = "ghcr.io/thomasvitale/java-builder-arm64"
+}
+
+springBoot {
+    buildInfo()
 }
 
 tasks.named('test') {

@@ -39,11 +39,20 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/PolarBookshop
+info:
+  system: Polar Bookshop
 management:
   endpoints:
     web:
       exposure:
-        include: health, prometheus
+        include: flyway, health, heapdump, info, prometheus
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
   endpoint:
     health:
       show-details: always
@@ -53,3 +62,6 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

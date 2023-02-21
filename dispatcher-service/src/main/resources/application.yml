@@ -23,9 +23,10 @@ spring:
         multiplier: 1.1
         max-interval: 2000
         initial-interval: 1000
-      enabled: true
+      enabled: false
   config:
-    import: "optional:configserver:"
+#    import: "optional:configserver:"
+    import: ""
   rabbitmq:
     host: localhost
     port: 5672

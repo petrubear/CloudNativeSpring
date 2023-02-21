@@ -38,6 +38,7 @@ spring:
             producer:
               transacted: true
     config:
+      enabled: false
       uri: http://localhost:8888
       request-connect-timeout: 5000
       request-read-timeout: 5000
@@ -47,9 +48,9 @@ spring:
         multiplier: 1.1
         max-interval: 2000
         initial-interval: 1000
-      enabled: true
   config:
-    import: "optional:configserver:"
+#    import: "optional:configserver:"
+    import: ""
   rabbitmq:
     host: localhost
     port: 5672
